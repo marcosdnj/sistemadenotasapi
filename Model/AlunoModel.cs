@@ -18,7 +18,8 @@ namespace sistemaEscolar.Model
         public ICollection<ProfessorModel> Professor { get; set; }
 
         public bool Recuperacao { get; set; }
-        
+
+        public bool Aprovado { get; set; }
         public bool Reprovado { get; set; }
 
         public float NotaRecuperacao { get; set; }

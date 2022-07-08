@@ -27,6 +27,7 @@ namespace sistemaEscolar.Controllers
             return Ok(alunos);
         }
 
+
         [HttpGet]
         [Route("alunos/{id}")]
         public async Task<IActionResult> GetByName(
@@ -44,6 +45,7 @@ namespace sistemaEscolar.Controllers
             return Ok(aluno);
         }
 
+
         [HttpPost]
         [Route("alunos")]
         public async Task<IActionResult> PostAsync(
@@ -59,17 +61,18 @@ namespace sistemaEscolar.Controllers
                 Nota2 = Aluno.Nota2,
                 Nota3 = Aluno.Nota3,
             };
-
+            //Calculo de média
             CalculoMedia calculadora = new CalculoMedia();
             calculadora.calcularMedia(aluno.Nota1, aluno.Nota2, aluno.Nota3);
             aluno.Media = calculadora.media;
             aluno.Media = (float)Math.Round(aluno.Media, 2);
 
-           
-            if (aluno.Media < 6 && aluno.Media > 4)
-                aluno.Recuperacao = true;
-            else if (aluno.Media < 4)
-                aluno.Reprovado = true;
+            //Lógica de recuperação
+            RastrearMedia rastrearMedia = new RastrearMedia();
+            aluno.Recuperacao = rastrearMedia.calcRecuperacao(aluno.Media);
+
+            //Lógica de reprovação
+            aluno.Reprovado = rastrearMedia.calcReprovacao(aluno.Media);
 
             try
             {
@@ -103,16 +106,21 @@ namespace sistemaEscolar.Controllers
             aluno.Nota1 = Aluno.Nota1;
             aluno.Nota2 = Aluno.Nota2;
             aluno.Nota3 = Aluno.Nota3;
+
+            //Calculo de média
             CalculoMedia calculadora = new CalculoMedia();
             calculadora.calcularMedia(aluno.Nota1, aluno.Nota2, aluno.Nota3);
             aluno.Media = calculadora.media;
             aluno.Media = (float)Math.Round(aluno.Media, 2);
 
 
-            if(aluno.Media < 6 && aluno.Media > 4)
-                aluno.Recuperacao = true;
-            else if(aluno.Media < 4)
-                aluno.Reprovado = true;
+            //Lógica de recuperação
+            RastrearMedia rastrearMedia = new RastrearMedia();
+            aluno.Recuperacao = rastrearMedia.calcRecuperacao(aluno.Media);
+
+            //Lógica de reprovação
+            aluno.Reprovado = rastrearMedia.calcReprovacao(aluno.Media);
+
 
             try
             { 
@@ -125,20 +133,6 @@ namespace sistemaEscolar.Controllers
                 return BadRequest();
             }
         }
-
-
-
-
-
-
-
-
-
-        /// 
-        /// VERIFICAR A LÓGICA ABAIXO
-        /// 
-        /// 
-
 
 
         [HttpPatch]
@@ -159,33 +153,17 @@ namespace sistemaEscolar.Controllers
                 return NotFound();
 
                 Aluno.ApplyTo(aluno);
-                var calculadora = new CalculoMedia();
-                var rastrearNota = new RastrearMedia();
-                calculadora.calcularMedia(aluno.Nota1, aluno.Nota2, aluno.Nota3);
-                aluno.Media = calculadora.media;
-                aluno.Media = (float)Math.Round(aluno.Media, 2);
-
-                aluno.NotaFinal = rastrearNota.CalcNotaFinal(aluno.Media, aluno.NotaRecuperacao);
-                aluno.Recuperacao = rastrearNota.calcRecuperacao(aluno.Media);
-                aluno.Reprovado = rastrearNota.calcReprovacao(aluno.Media);
-               
-
                 
-                //aluno.NotaFinal = (aluno.Media + aluno.NotaRecuperacao) / 2;
 
-            //if (aluno.Media < 6 && aluno.Media > 4)
-            //    aluno.Recuperacao = true;
-            //else if (aluno.Media < 4)
-            //    aluno.Reprovado = true;
-            //else
-            //{
-            //    aluno.Reprovado = false;
-            //    aluno.Recuperacao = false;
-            //}
-            //if (aluno.NotaFinal < 5)
-            //    aluno.Reprovado = true;
-            //else
-            //    aluno.Recuperacao = false;
+                //Logica de recupercao
+                var rastrearNota = new RastrearMedia();
+                aluno.Recuperacao = rastrearNota.calcRecuperacao(aluno.Media);
+                
+                //Lógica de nota Final
+                aluno.NotaFinal = rastrearNota.CalcNotaFinal(aluno.Media, aluno.NotaRecuperacao);
+                
+                //Situacao Final
+                aluno.Aprovado = rastrearNota.situacaofinal(aluno.Media, aluno.NotaRecuperacao);
 
 
             try

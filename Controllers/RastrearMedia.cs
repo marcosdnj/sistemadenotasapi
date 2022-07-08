@@ -14,19 +14,18 @@
             if (media > 4 && media < 6) 
                 return true;
                           
-            else if (media < 4)
+            if (media < 4)
                 return false;
-                
-            else
-              return false;                  
+                           
+            return false;                  
         }
 
         public bool calcReprovacao(float media)
         {
             if (media < 4)
                 return true;
-            else
-                return false;
+            
+            return false;
         }
 
         public float CalcNotaFinal(float media, float notaRecuperacao)
@@ -36,14 +35,13 @@
             return notaFinal;
         }
 
-
-        public bool situacaoFinal(float media, float notaRecuperacao)
+        public bool situacaofinal(float media, float notarecuperacao)
         {
-            if ((media + notaRecuperacao) / 2 > 5)
-                return false;
-            else
-                return true;
 
+            if (((media + notarecuperacao) / 2) > 5)
+                return true;
+            else
+                return false;
         }
 
     }
