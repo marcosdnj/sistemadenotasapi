@@ -164,19 +164,17 @@ namespace sistemaEscolar.Controllers
                 
                 //Situacao Final
                 aluno.Aprovado = rastrearNota.situacaofinal(aluno.Media, aluno.NotaRecuperacao);
-
-
             try
                 {
                     await context.SaveChangesAsync();
                     return Ok();
-                    
                 }
                 catch (Exception ex)
                 {
                     return BadRequest();
                 }
             return BadRequest();
+        }
     }
 }
 
