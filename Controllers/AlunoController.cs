@@ -177,52 +177,6 @@ namespace sistemaEscolar.Controllers
                     return BadRequest();
                 }
             return BadRequest();
-
-
-            
-            //aluno.Nota1 = Aluno.Nota1;
-            //aluno.Nota2 = Aluno.Nota2;
-            //aluno.Nota3 = Aluno.Nota3;
-            //CalculoMedia calculadora = new CalculoMedia();
-            //calculadora.calcularMedia(aluno.Nota1, aluno.Nota2, aluno.Nota3);
-            //aluno.Media = calculadora.media;
-            //aluno.Media = (float)Math.Round(aluno.Media, 2);
-
-
-            //if (aluno.Media < 6 && aluno.Media > 4)
-            //    aluno.Recuperacao = true;
-            //else if (aluno.Media < 4)
-            //    aluno.Reprovado = true;
-
-
-
-
-            //aluno.NotaFinal = (aluno.Media/aluno.NotaRecuperacao);
-
-            //if(aluno.NotaFinal > 5)
-            //    aluno.Reprovado = false;
-
-            //try
-            //{
-            //    context.Aluno.(aluno);
-
-            //    await context.SaveChangesAsync();
-            //    return Ok(aluno);
-            //}
-            //catch
-            //{
-            //    return BadRequest();
-            //}
-        }
-
-        //[
-        //    { 
-        //        "path": "/notarecuperacao",
-        //        "op": "replace",
-        //        "value": "9" 
-        //    } 
-        //]
-
     }
 }
 
