@@ -6,6 +6,7 @@ using sistemaEscolar.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace sistemaEscolar.Controllers
 {
@@ -175,6 +176,28 @@ namespace sistemaEscolar.Controllers
                 }
             return BadRequest();
         }
-    }
+
+
+        [HttpGet]
+        [Route("alunostopfive")]
+        public async Task<IActionResult> GetTopFive(
+                [FromServices] AppDbContext context)
+        {
+            try
+            {
+                var alunos = context
+                .Aluno
+                .AsNoTracking()
+                .OrderByDescending(p => p.Media).Take(5);
+                return Ok(alunos);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            
+        }
+
+    }    
 }
 
